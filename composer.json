@@ -1,0 +1,26 @@
+{
+    "description": "hCaptcha field and validator for Neos.Fusion.Form",
+    "authors": [
+        {
+            "name": "Sören Rossmann",
+            "email": "soeren@comvation.com",
+            "role": "Developer"
+        }
+    ],
+    "license": "GPL-3.0-or-later",
+    "type": "neos-package",
+    "name": "comvation/fusionform-hcaptcha",
+    "require": {
+        "neos/fusion-form": "~2.0 || dev-master || dev-main"
+    },
+    "autoload": {
+        "psr-4": {
+            "Comvation\\FusionForm\\HCaptcha\\": "Classes/"
+        }
+    },
+    "extra": {
+        "neos": {
+            "package-key": "Comvation.FusionForm.HCaptcha"
+        }
+    }
+}

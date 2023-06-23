@@ -1,0 +1,10 @@
+Comvation:
+  FusionForm:
+    HCaptcha:
+      siteKey: ''
+      siteSecret: '' 
+Neos:
+  Neos:
+    fusion:
+      autoInclude:
+        Comvation.FusionForm.HCaptcha: true

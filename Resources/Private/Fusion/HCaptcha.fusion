@@ -1,0 +1,8 @@
+prototype(Comvation.FusionForm.HCaptcha:HCaptcha) < prototype(Neos.Fusion.Form:Component.Field) {
+    captchaSiteKey = null
+    captchaSiteKey.@process.fallbackToSetting = ${value ? value : Configuration.setting('Comvation.FusionForm.HCaptcha.siteKey')}
+    renderer = afx`
+        <script src="https://js.hcaptcha.com/1/api.js" async defer></script>
+        <div class="h-captcha" id={field.getName()} name={field.getName()} data-sitekey={props.captchaSiteKey} data-lang={node.context.targetDimensions.language}></div>
+    `
+}
