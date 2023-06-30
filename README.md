@@ -25,6 +25,10 @@ Add the dependency and update your composer dependencies:
     composer require --no-update "comvation/fusionform-hcaptcha"
     composer update
 
+
+**Important Note:
+To allow Bitbucket Pipelines to require the above repository, you need to add the SSH Key of your project to this repositories Access Keys!**
+
 ## Usage
 
 Add custom field and validator to your form content and schema respectively:
