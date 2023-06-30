@@ -23,11 +23,8 @@ Add additional VCS repository to your `composer.json`:
 Add the dependency and update your composer dependencies:
 
     composer require --no-update "comvation/fusionform-hcaptcha"
-    composer update
+    composer update comvation/fusionform-hcaptcha
 
-
-**Important Note:
-To allow Bitbucket Pipelines to require the above repository, you need to add the SSH Key of your project to this repositories Access Keys!**
 
 ## Usage
 
@@ -64,6 +61,12 @@ Comvation:
 ```
 
 Check [hCaptcha docs](https://docs.hcaptcha.com/#integration-testing-test-keys) for more infos and test keys. 
+
+
+## Deployment
+
+To allow Bitbucket Pipelines to require the above repository, you need to add the SSH Key of your project to this repositories Access Keys!
+
 
 ## Release process
 
