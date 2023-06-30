@@ -14,7 +14,7 @@ Add additional VCS repository to your `composer.json`:
     },
     {
       "type": "vcs",
-      "url": "git@bitbucket.org:comvation/comvation-neos-hcaptcha.git"
+      "url": "git@bitbucket.org:comvation/fusionform-hcaptcha.git"
     }
   ],
   ...
