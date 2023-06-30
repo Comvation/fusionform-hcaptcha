@@ -22,7 +22,7 @@ Add additional VCS repository to your `composer.json`:
 
 Add the dependency and update your composer dependencies:
 
-    composer require --no-update "comvation/neos-hcaptcha"
+    composer require --no-update "comvation/fusionform-hcaptcha"
     composer update
 
 ## Usage
