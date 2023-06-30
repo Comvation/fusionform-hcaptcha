@@ -41,7 +41,7 @@ prototype(Vendor.Site:RuntimeForm) < prototype(Neos.Fusion.Form:Runtime.RuntimeF
 
         schema {
             captchaValidatorField = ${Form.Schema.string()}
-            captchaValidatorField.@process.captchaValidator = ${value.validator('Comvation.FusionForm.FriendlyCaptcha:FriendlyCaptcha')}
+            captchaValidatorField.@process.captchaValidator = ${value.validator('Comvation.FusionForm.HCaptcha:HCaptcha')}
         }
     }
 
