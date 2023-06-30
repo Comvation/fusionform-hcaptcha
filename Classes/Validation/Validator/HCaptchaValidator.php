@@ -18,9 +18,9 @@ class HCaptchaValidator extends AbstractValidator
     {
         $siteSecret = $this->options['siteSecret'] ?: $this->siteSecret;
         $captchaResponse = $captcha ?? false;
-        if ($captchaResponse) {*/
+        if ($captchaResponse) {
             /** @phpstan-ignore-next-line */
-            /*$client = new CurlEngine();
+            $client = new CurlEngine();
             $client->setOption(CURLOPT_RETURNTRANSFER, true );
             $response = $client->sendRequest(
                 new ServerRequest(
