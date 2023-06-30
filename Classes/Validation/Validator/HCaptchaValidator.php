@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Comvation\FusionForm\Validation\Validator;
+namespace Comvation\FusionForm\HCaptcha\Validation\Validator;
 
 use GuzzleHttp\Psr7\ServerRequest;
 use GuzzleHttp\Psr7\Uri;
