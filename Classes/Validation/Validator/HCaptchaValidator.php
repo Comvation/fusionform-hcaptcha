@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Kommunalpartner\Site\Validation\Validator;
+namespace Comvation\FusionForm\Validation\Validator;
 
 use GuzzleHttp\Psr7\ServerRequest;
 use GuzzleHttp\Psr7\Uri;
@@ -16,7 +16,7 @@ class HCaptchaValidator extends AbstractValidator
 
     protected function isValid($captcha): void
     {
-        /*$siteSecret = $this->options['siteSecret'] ?: $this->siteSecret;
+        $siteSecret = $this->options['siteSecret'] ?: $this->siteSecret;
         $captchaResponse = $captcha ?? false;
         if ($captchaResponse) {*/
             /** @phpstan-ignore-next-line */
@@ -40,7 +40,7 @@ class HCaptchaValidator extends AbstractValidator
             }
             return;
         }
-        $this->addError('Der Request konnte nicht gelesen werden.', 1649869170);*/
+        $this->addError('Der Request konnte nicht gelesen werden.', 1649869170);
     }
 
 }
