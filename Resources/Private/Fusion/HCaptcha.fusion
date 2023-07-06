@@ -2,13 +2,11 @@ prototype(Comvation.FusionForm.HCaptcha:HCaptcha) < prototype(Neos.Fusion.Form:C
     captchaSiteKey = null
     captchaSiteKey.@process.fallbackToSetting = ${value ? value : Configuration.setting('Comvation.FusionForm.HCaptcha.siteKey')}
     theme = 'dark'
-    callBackScript = ${"<script>{"
-      function captchaCallBack(token) {
-          document.getElementById('captcha-token').value = token;
-      }
-    "}</script>"}
+    callbackScriptSrc = Neos.Fusion:ResourceUri {
+      path = 'resource://Comvation.FusionForm.HCaptcha/Public/JavaScript/captchaCallback.js'
+    }
     renderer = afx`
-        {props.callbackScript}
+        <script src={props.callbackScriptSrc}></script>
         <script src="https://js.hcaptcha.com/1/api.js" async defer></script>
         <input type="hidden" id="captcha-token" name={field.name} value="" />
         <div class="h-captcha" id={field.getName()} name={field.getName()} data-theme={props.theme} data-sitekey={props.captchaSiteKey} data-lang={node.context.targetDimensions.language} data-callback="captchaCallBack"></div>
