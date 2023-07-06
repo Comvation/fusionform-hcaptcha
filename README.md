@@ -34,14 +34,17 @@ prototype(Vendor.Site:RuntimeForm) < prototype(Neos.Fusion.Form:Runtime.RuntimeF
     process {
         content = afx`
             ... some fields of yours ...
-            <Neos.Fusion.Form:FieldContainer field.name="captchaValidatorField">
+
+            <!-- The Fieldname must be "h-captcha-respone"! -->
+            <Neos.Fusion.Form:FieldContainer field.name="h-captcha-response">
                 <Comvation.FusionForm.HCaptcha:HCaptcha />
             </Neos.Fusion.Form:FieldContainer>
+
         `
 
         schema {
-            captchaValidatorField = ${Form.Schema.string()}
-            captchaValidatorField.@process.captchaValidator = ${value.validator('Comvation.FusionForm.HCaptcha:HCaptcha')}
+            h-captcha-response = ${Form.Schema.string().isRequired()}
+            h-captcha-response.@process.captchaValidator = ${value.validator('Comvation.FusionForm.HCaptcha:HCaptcha')}
         }
     }
 
