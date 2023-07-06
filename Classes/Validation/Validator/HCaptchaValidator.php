@@ -14,14 +14,7 @@ class HCaptchaValidator extends AbstractValidator
      */
     protected $siteSecret;
 
-    /**
-     * @Flow\InjectConfiguration(path="siteKey")
-     * @var string
-     */
-    protected $siteKey;
-
     protected $supportedOptions = [
-        'siteKey' => [null, 'siteKey', 'string', false],
         'siteSecret' => [null, 'siteSecret', 'string', false]
     ];
 
@@ -33,19 +26,18 @@ class HCaptchaValidator extends AbstractValidator
             'secret' => $siteSecret,
             'response' => $captchaResponse
         );
-        if ($data) {
-            $verify = curl_init();
-            curl_setopt($verify, CURLOPT_URL, "https://hcaptcha.com/siteverify");
-            curl_setopt($verify, CURLOPT_POST, true);
-            curl_setopt($verify, CURLOPT_POSTFIELDS, http_build_query($data));
-            curl_setopt($verify, CURLOPT_RETURNTRANSFER, true);
-            $response = curl_exec($verify);
-            $responseData = json_decode($response);
-            if($responseData->success) {
-                return;
-            } else {
-                $this->addError('Captcha is invalid.', 20230123115302);
-            }
+
+        $verify = curl_init();
+        curl_setopt($verify, CURLOPT_URL, "https://hcaptcha.com/siteverify");
+        curl_setopt($verify, CURLOPT_POST, true);
+        curl_setopt($verify, CURLOPT_POSTFIELDS, http_build_query($data));
+        curl_setopt($verify, CURLOPT_RETURNTRANSFER, true);
+        $response = curl_exec($verify);
+        $responseData = json_decode($response);
+        if($responseData->success) {
+            return;
+        } else {
+            $this->addError('Captcha is invalid.', 20230123115302);
         }
         $this->addError('Der Request konnte nicht gelesen werden.', 1649869170);
     }
