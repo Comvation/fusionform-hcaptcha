@@ -35,7 +35,7 @@ prototype(Vendor.Site:RuntimeForm) < prototype(Neos.Fusion.Form:Runtime.RuntimeF
         content = afx`
             ... some fields of yours ...
 
-            <!-- The Fieldname must be "h-captcha-respone"! -->
+            <!-- field.name value MUST match the schema property below -->
             <Neos.Fusion.Form:FieldContainer field.name="h-captcha-response">
                 <Comvation.FusionForm.HCaptcha:HCaptcha />
             </Neos.Fusion.Form:FieldContainer>
@@ -59,10 +59,10 @@ Comvation:
   FusionForm:
     HCaptcha:
       siteKey: ''
-      siteSecret: '' 
+      siteSecret: ''
 ```
 
-Check [hCaptcha docs](https://docs.hcaptcha.com/#integration-testing-test-keys) for more infos and test keys. 
+Check [hCaptcha docs](https://docs.hcaptcha.com/#integration-testing-test-keys) for more infos and test keys.
 
 
 ## Deployment
@@ -78,4 +78,3 @@ Simply create a new git tag to release a stable version:
 
     git tag -a v0.9.0 -m "First dev release v0.9.0"
     git push origin v0.9.0
-
