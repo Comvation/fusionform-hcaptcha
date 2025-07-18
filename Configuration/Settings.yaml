@@ -1,8 +1,11 @@
 Comvation:
   FusionForm:
     HCaptcha:
-      siteKey: ''
-      siteSecret: '' 
+      siteKey: 10000000-ffff-ffff-ffff-000000000001
+      siteSecret: 0x0000000000000000000000000000000000000000
+      size: normal # compact # Visible to the visitor
+      # size: invisible # Invisible, validates on submit only
+      theme: dark
 Neos:
   Neos:
     fusion:

@@ -1,18 +1,16 @@
-<?php
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace Comvation\FusionForm\HCaptcha\Validation\Validator;
 
-use Neos\Flow\Annotations AS Flow;
+use Neos\Flow\Annotations as Flow;
 use Neos\Flow\Validation\Validator\AbstractValidator;
 
 class HCaptchaValidator extends AbstractValidator
 {
     /**
      * @Flow\InjectConfiguration(path="siteSecret")
-     * @var string
      */
-    protected $siteSecret;
+    protected string $siteSecret;
 
     protected $supportedOptions = [
         'siteSecret' => [null, 'siteSecret', 'string', false]
@@ -26,7 +24,6 @@ class HCaptchaValidator extends AbstractValidator
             'secret' => $siteSecret,
             'response' => $captchaResponse
         );
-
         $verify = curl_init();
         curl_setopt($verify, CURLOPT_URL, "https://hcaptcha.com/siteverify");
         curl_setopt($verify, CURLOPT_POST, true);
@@ -41,5 +38,4 @@ class HCaptchaValidator extends AbstractValidator
         }
         $this->addError('Der Request konnte nicht gelesen werden.', 1649869170);
     }
-
 }
