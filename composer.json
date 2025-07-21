@@ -1,7 +1,6 @@
 {
-    "version": "1.0.0",
     "description": "hCaptcha field and validator for Neos.Fusion.Form",
-    "license": "GPL-3.0-or-later",
+    "license": "MIT",
     "type": "neos-package",
     "name": "comvation/fusionform-hcaptcha",
     "require": {
