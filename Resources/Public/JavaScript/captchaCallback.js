@@ -4,8 +4,20 @@
  * Validate the captcha, and submit on success only.
  * Required for invisible mode only.
  */
-function captchaLoaded(/*...args*/) { // No arguments
-  const elementSubmit = document.querySelector('button[type=submit]')
+function captchaLoaded() {
+  const elementContainer = document.querySelector('#captcha-container')
+  if (!elementContainer) {
+    return
+  }
+  const selector = elementContainer.dataset.selector
+  if (!selector) {
+    return
+  }
+  const elementSubmit = document.querySelector(selector)
+  if (!elementSubmit) {
+    console.warn('Invalid selector, or element not found:', selector)
+    return
+  }
   elementSubmit.onclick = captchaValidate
 }
 
@@ -16,11 +28,8 @@ function captchaLoaded(/*...args*/) { // No arguments
  */
 function captchaValidate(event) {
   event.preventDefault()
-  // NTH: Only call this (once) *after* validating the form/fields
   hcaptcha.execute(null, { async: true })
-    // The key is apparently empty, and of no use here.
-    .then(({ token, key }) => {
-      // DO NOT // event.target.click() // as this will loop.
+    .then(() => {
       event.target.form.submit()
     })
     .catch(err => {

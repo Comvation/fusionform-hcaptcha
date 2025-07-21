@@ -7,35 +7,38 @@ use Neos\Flow\Validation\Validator\AbstractValidator;
 
 class HCaptchaValidator extends AbstractValidator
 {
-    /**
-     * @Flow\InjectConfiguration(path="siteSecret")
-     */
+    #[Flow\InjectConfiguration(path: "siteSecret")]
     protected string $siteSecret;
 
     protected $supportedOptions = [
         'siteSecret' => [null, 'siteSecret', 'string', false]
     ];
 
-    protected function isValid($captcha): void
+    protected function isValid($captchaResponse): void
     {
         $siteSecret = $this->options['siteSecret'] ?: $this->siteSecret;
-        $captchaResponse = $captcha ?? false;
-        $data = array(
-            'secret' => $siteSecret,
-            'response' => $captchaResponse
-        );
+        // The required field is marked as an error anyway
+        if (!$captchaResponse) {
+            return;
+        }
         $verify = curl_init();
         curl_setopt($verify, CURLOPT_URL, "https://hcaptcha.com/siteverify");
         curl_setopt($verify, CURLOPT_POST, true);
-        curl_setopt($verify, CURLOPT_POSTFIELDS, http_build_query($data));
+        curl_setopt($verify, CURLOPT_POSTFIELDS, http_build_query([
+            'secret' => $siteSecret,
+            'response' => $captchaResponse,
+        ]));
         curl_setopt($verify, CURLOPT_RETURNTRANSFER, true);
+        // May return false
         $response = curl_exec($verify);
-        $responseData = json_decode($response);
-        if($responseData->success) {
+        if (!$response) {
+            $this->addError('Failed to verify the captcha response.', 0);
             return;
-        } else {
-            $this->addError('Captcha is invalid.', 20230123115302);
         }
-        $this->addError('Der Request konnte nicht gelesen werden.', 1649869170);
+        $responseData = json_decode($response);
+        if ($responseData?->success) {
+            return;
+        }
+        $this->addError('The captcha is invalid.', 0);
     }
 }

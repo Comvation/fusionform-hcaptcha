@@ -1,22 +1,27 @@
 prototype(Comvation.FusionForm.HCaptcha:HCaptcha) < prototype(Neos.Fusion.Form:Component.Field) {
+  siteKey = ${Configuration.setting('Comvation.FusionForm.HCaptcha.siteKey')}
   size = ${Configuration.setting('Comvation.FusionForm.HCaptcha.size')}
   theme = ${Configuration.setting('Comvation.FusionForm.HCaptcha.theme')}
-  siteKey = ${Configuration.setting('Comvation.FusionForm.HCaptcha.siteKey')}
   scriptSrc = Neos.Fusion:ResourceUri {
     path = 'resource://Comvation.FusionForm.HCaptcha/Public/JavaScript/captchaCallback.js'
   }
+  @context.language = ${Neos.Dimension.currentValue(node, 'language').value}
+  languageParameter = ${language ? "&hl="+language :''}
+
   renderer = afx`
     <script src={props.scriptSrc}></script>
     <script async defer src={
       "https://js.hcaptcha.com/1/api.js"
-      + "?hl="+node.context.targetDimensions.language
-      + ((props.size == 'invisible') ? "&onload=captchaLoaded" : "")
+      + "?onload=captchaLoaded"
+      + props.languageParameter
       }></script>
     <input type="hidden" id="captcha-token" name={field.name} value="" />
-    <div class="h-captcha"
-      data-theme={props.theme} data-size={props.size}
+    <div class="h-captcha" id="captcha-container"
+      data-callback="captchaCallback"
+      data-selector={props.selector}
       data-sitekey={props.siteKey}
-      data-lang={node.context.targetDimensions.language}
-      data-callback="captchaCallback"></div>
+      data-size={props.size}
+      data-theme={props.theme}
+    ></div>
   `
 }

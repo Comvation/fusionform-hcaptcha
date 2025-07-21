@@ -1,80 +1,84 @@
 # hCaptcha for Neos.Fusion.Form
 
-Setup inspired by sitegeist/Sitegeist.FusionForm.FriendlyCaptcha
+Integrates the hCaptcha into any Neos.Fusion.Form.
+
+Inspired by sitegeist/Sitegeist.FusionForm.FriendlyCaptcha.
+
+# Requirements
+
+* Neos
+* Composer
+
+## Supported and Tested Versions
+
+Neos from 8.0 up to and including 9.0.x.
 
 ## Installation
 
-Add additional VCS repository to your `composer.json`:
-
+Add the plugin, and install the dependencies:
+```bash
+composer require comvation/sylius-payrexx-checkout-plugin
+composer install
 ```
-  "repositories": [
-    {
-      "type": "path",
-      "url": "./DistributionPackages/*"
-    },
-    {
-      "type": "vcs",
-      "url": "git@bitbucket.org:comvation/fusionform-hcaptcha.git"
-    }
-  ],
-  ...
-```
-
-Add the dependency and update your composer dependencies:
-
-    composer require "comvation/fusionform-hcaptcha"
-
 
 ## Usage
 
-Add custom field and validator to your form content and schema respectively:
-
+Add the captcha field and validator to your form content and schema,
+respectively:
 ```
 prototype(Vendor.Site:RuntimeForm) < prototype(Neos.Fusion.Form:Runtime.RuntimeForm) {
-    process {
-        content = afx`
-            ... some fields of yours ...
-
-            <!-- field.name value MUST match the schema property below -->
-            <Neos.Fusion.Form:FieldContainer field.name="h-captcha-response">
-                <Comvation.FusionForm.HCaptcha:HCaptcha />
-            </Neos.Fusion.Form:FieldContainer>
-
-        `
-
-        schema {
-            h-captcha-response = ${Form.Schema.string().isRequired()}
-            h-captcha-response.@process.captchaValidator = ${value.validator('Comvation.FusionForm.HCaptcha:HCaptcha')}
-        }
+  process {
+    content = afx`
+      [...your form contents...]
+      <!-- field.name value MUST match the schema property below -->
+      <Neos.Fusion.Form:FieldContainer field.name="h-captcha-response">
+        <Comvation.FusionForm.HCaptcha:HCaptcha />
+      </Neos.Fusion.Form:FieldContainer>
+    `
+    schema {
+      [...your schema entries...]
+      <!-- This name must be equal to the field.name above -->
+      h-captcha-response = ${Form.Schema.string().isRequired()}
+      h-captcha-response.@process.captchaValidator = ${value.validator('Comvation.FusionForm.HCaptcha:HCaptcha')}
     }
-
-    action { ... }
+  }
+  action { [no changes required] }
 }
 ```
+Add the key and secret, as well as other desired configuration to your
+Settings.yaml.
 
-Also check your Settings.yaml for hCaptcha in the following format:
-
-```
+Note:  Only a few selected configuration options are available in the
+settings for now.
+```yaml
 Comvation:
   FusionForm:
     HCaptcha:
-      siteKey: ''
-      siteSecret: ''
+      siteKey: '<your-key>'
+      siteSecret: '<your-secret>'
+      size: 'invisible' # optional, default is "normal"
+      theme: 'dark' # optional, default is "light"
 ```
+See [hCaptcha docs](https://docs.hcaptcha.com/#integration-testing-test-keys)
+for details on the available options, as well as test keys.
 
-Check [hCaptcha docs](https://docs.hcaptcha.com/#integration-testing-test-keys) for more infos and test keys.
+## Using a Custom Button
 
+By default, the plugin presumes that the form uses a standard form
+submit button.
 
-## Deployment
+If that isn't the case, specify a selector attribute that exclusively
+matches your button.
 
-To allow Bitbucket Pipelines to require the above repository, you need to add the SSH Key of your project to this repositories Access Keys!
-
-
-## Release process
-
-We use Semantic Versioning.
-
-Simply create a new git tag to release a stable version:
-
-    git tag -a v0.9.0 -m "First dev release v0.9.0"
-    git push origin v0.9.0
+For example, this one
+```
+footer = afx`
+  <button class="my-submit">Send</button>
+`
+```
+may be used by adding the selector attribute
+```
+<Comvation.FusionForm.HCaptcha:HCaptcha
+  selector={'button[class=my-submit]'}
+/>
+```
