@@ -6,18 +6,18 @@
  */
 function captchaLoaded() {
   const elementContainer = document.querySelector('#captcha-container')
-  if (!elementContainer) {
-    return
+  if (elementContainer) {
+    const selector = elementContainer.dataset.selector
+    if (selector) {
+      const elementSubmit = document.querySelector(selector)
+      if (elementSubmit) {
+        elementSubmit.onclick = captchaValidate
+        return
+      }
+      console.warn('Invalid selector, or element not found:', selector)
+    }
   }
-  const selector = elementContainer.dataset.selector
-  if (!selector) {
-    return
-  }
-  const elementSubmit = document.querySelector(selector)
-  if (!elementSubmit) {
-    console.warn('Invalid selector, or element not found:', selector)
-    return
-  }
+  const elementSubmit = document.querySelector('button[type=submit]')
   elementSubmit.onclick = captchaValidate
 }
 
