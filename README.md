@@ -17,7 +17,7 @@ Neos from 8.0 up to and including 9.0.x.
 
 Add the plugin, and install the dependencies:
 ```bash
-composer require comvation/sylius-payrexx-checkout-plugin
+composer require comvation/fusionform-hcaptcha
 composer install
 ```
 
