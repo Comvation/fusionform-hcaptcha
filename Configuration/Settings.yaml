@@ -1,12 +1,15 @@
 Comvation:
   FusionForm:
     HCaptcha:
-      # Override the test key and secret for production use
+      # Test key and secret.
+      # Override in environment specific settings.
       siteKey: 10000000-ffff-ffff-ffff-000000000001
-      siteSecret: 0x0000000000000000000000000000000000000000
+      siteSecret: '0x0000000000000000000000000000000000000000'
+      # formSelector: form.contact__form # Defaults to the first form
       # size: compact # Smaller
       # size: invisible # Invisible, validates on submit
       # theme: dark
+
 Neos:
   Neos:
     fusion:

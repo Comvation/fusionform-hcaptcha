@@ -11,7 +11,7 @@ class HCaptchaValidator extends AbstractValidator
     protected string $siteSecret;
 
     protected $supportedOptions = [
-        'siteSecret' => [null, 'siteSecret', 'string', false]
+        'siteSecret' => ['', 'siteSecret', 'string', false]
     ];
 
     protected function isValid($captchaResponse): void
