@@ -27,7 +27,7 @@ When you update from v1.1.0 or lower, and you are using a `selector` for
 the submit button, you must update your settings to use a `formSelector`
 instead.
 
-See [Using a Form Selector] below.
+See [Using a Form Selector](#using-a-form-selector) below.
 
 ## Usage
 
