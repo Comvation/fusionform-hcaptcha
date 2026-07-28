@@ -21,6 +21,14 @@ composer require comvation/fusionform-hcaptcha
 composer install
 ```
 
+## Update / Breaking Changes
+
+When you update from v1.1.0 or lower, and you are using a `selector` for
+the submit button, you must update your settings to use a `formSelector`
+instead.
+
+See [Using a Form Selector] below.
+
 ## Usage
 
 Add the captcha field and validator to your form content and schema,
@@ -46,7 +54,7 @@ prototype(Vendor.Site:RuntimeForm) < prototype(Neos.Fusion.Form:Runtime.RuntimeF
 }
 ```
 Add the key and secret, as well as other desired configuration to your
-Settings.yaml.
+environment specific Settings.yaml.
 
 Note:  Only a few selected configuration options are available in the
 settings for now.
@@ -62,23 +70,26 @@ Comvation:
 See [hCaptcha docs](https://docs.hcaptcha.com/#integration-testing-test-keys)
 for details on the available options, as well as test keys.
 
-## Using a Custom Button
+## Using a Form Selector
 
-By default, the plugin presumes that the form uses a standard form
-submit button.
+By default, the plugin hooks into the first form on the page
+using `document.forms[0]`.
 
-If that isn't the case, specify a selector attribute that exclusively
-matches your button.
+If the intended one isn't the first, `formSelector` should be used.
+For example:
+```
+...
+<form class="ignore-me">...</form>
+...
+<form class="i-want-you">...</form>
+...
+```
+To choose the second form, add the matching selector to your settings:
+```
+Comvation:
+  FusionForm:
+    HCaptcha:
+      formSelector: form.i-want-you
+```
 
-For example, this one
-```
-footer = afx`
-  <button class="my-submit">Send</button>
-`
-```
-may be used by adding the selector attribute
-```
-<Comvation.FusionForm.HCaptcha:HCaptcha
-  selector={'button[class=my-submit]'}
-/>
-```
+Note that the button `selector` setting is no longer supported after v1.1.0.

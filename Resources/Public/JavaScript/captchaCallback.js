@@ -1,24 +1,32 @@
 /**
- * Listen to the submit button click event
+ * Listen to the form submit event
  *
  * Validate the captcha, and submit on success only.
  * Required for invisible mode only.
  */
 function captchaLoaded() {
+  let form
   const elementContainer = document.querySelector('#captcha-container')
   if (elementContainer) {
-    const selector = elementContainer.dataset.selector
-    if (selector) {
-      const elementSubmit = document.querySelector(selector)
-      if (elementSubmit) {
-        elementSubmit.onclick = captchaValidate
-        return
+    const formSelector = elementContainer.dataset.formSelector
+    if (formSelector) {
+      form = document.querySelector(formSelector)
+      if (!form) {
+        console.warn('No form found for selector', formSelector)
       }
-      console.warn('Invalid selector, or element not found:', selector)
     }
   }
-  const elementSubmit = document.querySelector('button[type=submit]')
-  elementSubmit.onclick = captchaValidate
+  if (!form) {
+    const forms = document.forms
+    if (forms.length) {
+      form = forms[0]
+    }
+  }
+  if (!form) {
+    console.warn('No form found, invisible captcha will not work')
+    return
+  }
+  form.addEventListener('submit', captchaValidate)
 }
 
 /**
@@ -30,7 +38,7 @@ function captchaValidate(event) {
   event.preventDefault()
   hcaptcha.execute(null, { async: true })
     .then(() => {
-      event.target.form.submit()
+      event.target.submit()
     })
     .catch(err => {
       console.error(err)
